@@ -13,7 +13,7 @@ export function createCart() {
   const items = new Map<string, Product>();
 
   function addProduct(product: Product) {
-    ProductSchema.parse(product); // validation avec Zod
+    ProductSchema.parse(product);
 
     const existing = items.get(product.id);
     if (existing) {
@@ -21,6 +21,10 @@ export function createCart() {
     } else {
       items.set(product.id, { ...product });
     }
+  }
+
+  function removeProduct(productId: string) {
+    items.delete(productId);
   }
 
   function getProductCount() {
@@ -41,6 +45,7 @@ export function createCart() {
 
   return {
     addProduct,
+    removeProduct, // ← ajouté ici
     getProductCount,
     getTotal,
   };
