@@ -7,6 +7,7 @@ describe("cart module", () => {
   beforeEach(() => {
     cart = createCart();
   });
+  
 
   it("should add a product to the cart", () => {
     const product: Product = {
