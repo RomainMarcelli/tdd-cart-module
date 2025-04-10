@@ -36,4 +36,22 @@ describe("cart module", () => {
     expect(cart.getProductCount()).toBe(2);
     expect(cart.getTotal()).toBe(20);
   });
+
+  it("should remove a product from the cart", () => {
+    const product: Product = {
+      id: "p1",
+      name: "Product to remove",
+      price: 15,
+      quantity: 1,
+    };
+  
+    cart.addProduct(product);
+    expect(cart.getProductCount()).toBe(1);
+  
+    cart.removeProduct("p1");
+  
+    expect(cart.getProductCount()).toBe(0);
+    expect(cart.getTotal()).toBe(0);
+  });
+  
 });
