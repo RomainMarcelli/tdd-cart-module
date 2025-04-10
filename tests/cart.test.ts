@@ -53,5 +53,47 @@ describe("cart module", () => {
     expect(cart.getProductCount()).toBe(0);
     expect(cart.getTotal()).toBe(0);
   });
+
+  it("should do nothing when trying to remove a non-existing product", () => {
+    const product: Product = {
+      id: "p1",
+      name: "Only Product",
+      price: 20,
+      quantity: 1,
+    };
+  
+    cart.addProduct(product);
+    cart.removeProduct("does-not-exist");
+  
+    expect(cart.getProductCount()).toBe(1);
+    expect(cart.getTotal()).toBe(20);
+  });
+
+  
+  it("should throw an error if product has negative price", () => {
+    const invalidProduct = {
+      id: "p-invalid-1",
+      name: "Bad Price Product",
+      price: -10,
+      quantity: 1,
+    };
+  
+    
+    expect(() => cart.addProduct(invalidProduct)).toThrow();
+  });
+  
+  it("should throw an error if product has quantity 0", () => {
+    const invalidProduct = {
+      id: "p-invalid-2",
+      name: "Zero Quantity Product",
+      price: 10,
+      quantity: 0,
+    };
+  
+    
+    expect(() => cart.addProduct(invalidProduct)).toThrow();
+  });
+  
+  
   
 });
