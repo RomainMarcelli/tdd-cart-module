@@ -31,7 +31,7 @@ describe("cart module", () => {
     };
 
     cart.addProduct(product);
-    cart.addProduct(product); // même produit ajouté deux fois
+    cart.addProduct(product);
 
     expect(cart.getProductCount()).toBe(2);
     expect(cart.getTotal()).toBe(20);
@@ -44,12 +44,12 @@ describe("cart module", () => {
       price: 15,
       quantity: 1,
     };
-  
+
     cart.addProduct(product);
     expect(cart.getProductCount()).toBe(1);
-  
+
     cart.removeProduct("p1");
-  
+
     expect(cart.getProductCount()).toBe(0);
     expect(cart.getTotal()).toBe(0);
   });
@@ -61,15 +61,14 @@ describe("cart module", () => {
       price: 20,
       quantity: 1,
     };
-  
+
     cart.addProduct(product);
     cart.removeProduct("does-not-exist");
-  
+
     expect(cart.getProductCount()).toBe(1);
     expect(cart.getTotal()).toBe(20);
   });
 
-  
   it("should throw an error if product has negative price", () => {
     const invalidProduct = {
       id: "p-invalid-1",
@@ -77,11 +76,10 @@ describe("cart module", () => {
       price: -10,
       quantity: 1,
     };
-  
-    
+
     expect(() => cart.addProduct(invalidProduct)).toThrow();
   });
-  
+
   it("should throw an error if product has quantity 0", () => {
     const invalidProduct = {
       id: "p-invalid-2",
@@ -89,11 +87,25 @@ describe("cart module", () => {
       price: 10,
       quantity: 0,
     };
-  
-    
+
     expect(() => cart.addProduct(invalidProduct)).toThrow();
   });
-  
-  
-  
+
+  it("should apply a valid discount code", () => {
+    const product: Product = {
+      id: "p1",
+      name: "Expensive Product",
+      price: 100,
+      quantity: 1,
+    };
+
+    cart.addProduct(product);
+    cart.applyDiscount("PROMO10");
+
+    expect(cart.getTotal()).toBe(90); // 10% de réduction
+  });
+
+  it("should throw when applying an invalid discount code", () => {
+    expect(() => cart.applyDiscount("INVALID_CODE")).toThrow("Invalid discount code");
+  });
 });
