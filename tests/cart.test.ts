@@ -7,7 +7,6 @@ describe("cart module", () => {
   beforeEach(() => {
     cart = createCart();
   });
-  
 
   it("should add a product to the cart", () => {
     const product: Product = {
@@ -21,5 +20,20 @@ describe("cart module", () => {
 
     expect(cart.getProductCount()).toBe(2);
     expect(cart.getTotal()).toBe(40);
+  });
+
+  it("should increase quantity when adding an existing product", () => {
+    const product: Product = {
+      id: "p1",
+      name: "Test Product",
+      price: 10,
+      quantity: 1,
+    };
+
+    cart.addProduct(product);
+    cart.addProduct(product); // même produit ajouté deux fois
+
+    expect(cart.getProductCount()).toBe(2);
+    expect(cart.getTotal()).toBe(20);
   });
 });
