@@ -1,4 +1,3 @@
-
 {
   "name": "cart-tdd-template",
   "version": "1.0.0",
@@ -7,8 +6,17 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "vitest": "^1.0.0",
-    "zod": "^3.22.2",
-    "typescript": "^5.2.2"
-  }
+    "@types/node": "^22.14.0",
+    "typescript": "^5.8.3",
+    "vitest": "^1.6.1",
+    "zod": "^3.24.2"
+  },
+  "description": "- Comprendre et pratiquer le **TDD (Test Driven Development)**\r - Écrire des **tests unitaires robustes avec Vitest**\r - Valider les données avec **Zod**\r - Structurer un mini-module métier en Express (sans BDD)\r - (Bonus) Créer un **hook React** `useCart` testable",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
