@@ -1,4 +1,3 @@
-
 {
   "compilerOptions": {
     "target": "ESNext",
@@ -8,7 +7,8 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "dist",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "jsx": "react-jsx"
   },
   "include": ["src", "my-cart-app/tests"]
 }
