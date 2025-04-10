@@ -1,16 +1,47 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const ProductSchema = z.object({
   id: z.string(),
   name: z.string(),
-  price: z.number().nonnegative(),     // interdit les prix négatifs
-  quantity: z.number().int().positive(), // interdit les quantités 0 ou négatives
+  price: z.number().nonnegative(),
+  quantity: z.number().int().positive(),
 });
 
 export type Product = z.infer<typeof ProductSchema>;
 
-// On va exposer une fonction pour créer un panier
 export function createCart() {
-  // ici, on retourne les méthodes du module cart (que l'on ajoutera plus tard)
-  return {};
+  const items = new Map<string, Product>();
+
+  function addProduct(product: Product) {
+    ProductSchema.parse(product); // validation avec Zod
+
+    const existing = items.get(product.id);
+    if (existing) {
+      existing.quantity += product.quantity;
+    } else {
+      items.set(product.id, { ...product });
+    }
+  }
+
+  function getProductCount() {
+    let count = 0;
+    for (const item of items.values()) {
+      count += item.quantity;
+    }
+    return count;
+  }
+
+  function getTotal() {
+    let total = 0;
+    for (const item of items.values()) {
+      total += item.price * item.quantity;
+    }
+    return total;
+  }
+
+  return {
+    addProduct,
+    getProductCount,
+    getTotal,
+  };
 }
