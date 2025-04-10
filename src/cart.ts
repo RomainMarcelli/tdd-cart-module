@@ -12,6 +12,16 @@ export type Product = z.infer<typeof ProductSchema>;
 export function createCart() {
   const items = new Map<string, Product>();
 
+  // Taux de remise appliqué (par défaut : 0)
+  let discountRate = 0;
+
+  // Codes promo disponibles
+  const discountCodes: Record<string, number> = {
+    PROMO10: 0.1,
+    PROMO20: 0.2,
+    PROMO50: 0.5,
+  };
+
   function addProduct(product: Product) {
     ProductSchema.parse(product);
 
@@ -40,13 +50,21 @@ export function createCart() {
     for (const item of items.values()) {
       total += item.price * item.quantity;
     }
-    return total;
+    return total * (1 - discountRate);
+  }
+
+  function applyDiscount(code: string) {
+    if (!discountCodes[code]) {
+      throw new Error("Invalid discount code");
+    }
+    discountRate = discountCodes[code];
   }
 
   return {
     addProduct,
-    removeProduct, // ← ajouté ici
+    removeProduct,
     getProductCount,
     getTotal,
+    applyDiscount,
   };
 }
